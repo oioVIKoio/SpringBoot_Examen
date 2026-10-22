@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historias clínicas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Historias clínicas</h2>
+        <div>
+            <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
+            <a th:href="@{/historias/nuevo}" class="btn btn-primary">Nueva Historia</a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+    <table class="table table-bordered table-hover bg-white">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Paciente</th>
+            <th>Diagnóstico</th>
+            <th>Tratamiento</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="historia : ${historias}">
+            <td th:text="${historia.id}"></td>
+            <td th:text="${#temporals.format(historia.fecha, 'dd/MM/yyyy')}"></td>
+            <td th:text="${historia.paciente.nombreCompleto + ' (' + historia.paciente.dni + ')'}"></td>
+            <td th:text="${historia.diagnostico}"></td>
+            <td th:text="${historia.tratamiento}"></td>
+            <td>
+                <a th:href="@{'/historias/editar/' + ${historia.id}}" class="btn btn-warning btn-sm">Editar</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(historias)}">
+            <td colspan="6" class="text-center text-muted">No hay historias clínicas registradas</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+
+</div>
+
+</body>
+</html>

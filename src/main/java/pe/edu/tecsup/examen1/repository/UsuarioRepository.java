@@ -15,6 +15,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     List<Usuario> findDistinctByRoles_IdAndActivo(Long rolId, boolean activo);
 
+    List<Usuario> findDistinctByRoles_NombreAndActivo(String nombreRol, boolean activo);
+
     boolean existsByUsuario(String usuario);
 
     boolean existsByCorreo(String correo);
