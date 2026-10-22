@@ -28,6 +28,11 @@ public class Auditoria {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
+    @Column(length = 50)
+    private String entidad;
+
+    private Long entidadId;
+
     @PrePersist
     protected void alCrear() {
         fecha = LocalDateTime.now();
@@ -79,5 +84,21 @@ public class Auditoria {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public String getEntidad() {
+        return entidad;
+    }
+
+    public void setEntidad(String entidad) {
+        this.entidad = entidad;
+    }
+
+    public Long getEntidadId() {
+        return entidadId;
+    }
+
+    public void setEntidadId(Long entidadId) {
+        this.entidadId = entidadId;
     }
 }

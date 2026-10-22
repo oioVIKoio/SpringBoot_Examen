@@ -28,19 +28,16 @@ public class UsuarioService {
     private final TokenRecuperacionRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final Clock clock;
-    private final AuditoriaService auditoriaService;
 
     public UsuarioService(RolRepository rolRepository, UsuarioRepository usuarioRepository,
                           TokenRecuperacionRepository tokenRepository,
                           PasswordEncoder passwordEncoder,
-                          Clock clock,
-                          AuditoriaService auditoriaService) {
+                          Clock clock) {
         this.rolRepository = rolRepository;
         this.usuarioRepository = usuarioRepository;
         this.tokenRepository = tokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.clock = clock;
-        this.auditoriaService = auditoriaService;
     }
     public Usuario asignarRoles(Long usuarioId, Set<Long> rolesIds) {
 
@@ -60,13 +57,6 @@ public class UsuarioService {
         usuario.setRoles(new HashSet<>(roles));
 
         Usuario actualizado = usuarioRepository.save(usuario);
-
-        auditoriaService.registrar(
-                "ASIGNAR_ROLES",
-                "USUARIOS",
-                "Se modificaron los roles del usuario "
-                        + actualizado.getUsuario()
-        );
 
         return actualizado;
     }
@@ -137,13 +127,6 @@ public class UsuarioService {
 
         Usuario registrado =
                 usuarioRepository.save(usuario);
-
-        auditoriaService.registrar(
-                "CREAR_USUARIO",
-                "USUARIOS",
-                "Se registró el usuario "
-                        + registrado.getUsuario()
-        );
 
         return registrado;
     }
@@ -237,13 +220,6 @@ public class UsuarioService {
         Usuario actualizado =
                 usuarioRepository.save(usuario);
 
-        auditoriaService.registrar(
-                "MODIFICAR_USUARIO",
-                "USUARIOS",
-                "Se modificó el usuario "
-                        + actualizado.getUsuario()
-        );
-
         return actualizado;
     }
 
@@ -262,15 +238,6 @@ public class UsuarioService {
 
         Usuario actualizado =
                 usuarioRepository.save(usuario);
-
-        auditoriaService.registrar(
-                "CAMBIAR_ESTADO_USUARIO",
-                "USUARIOS",
-                "Usuario "
-                        + actualizado.getUsuario()
-                        + " cambiado a estado "
-                        + (activo ? "ACTIVO" : "INACTIVO")
-        );
 
         return actualizado;
     }

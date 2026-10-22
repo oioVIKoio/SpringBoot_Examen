@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.tecsup.examen1.entity.Permiso;
-import pe.edu.tecsup.examen1.service.AuditoriaService;
 import pe.edu.tecsup.examen1.service.PermisoService;
 
 @Controller
@@ -12,14 +11,11 @@ import pe.edu.tecsup.examen1.service.PermisoService;
 public class PermisoViewController {
 
     private final PermisoService permisoService;
-    private final AuditoriaService auditoriaService;
 
     public PermisoViewController(
-            PermisoService permisoService,
-            AuditoriaService auditoriaService) {
+            PermisoService permisoService) {
 
         this.permisoService = permisoService;
-        this.auditoriaService = auditoriaService;
     }
 
     @GetMapping
@@ -64,21 +60,7 @@ public class PermisoViewController {
     public String guardarPermiso(
             @ModelAttribute("permisoForm") Permiso permiso) {
 
-        boolean nuevo = permiso.getId() == null;
-
-        Permiso guardado =
-                permisoService.guardar(permiso);
-
-        auditoriaService.registrar(
-                nuevo
-                        ? "CREAR_PERMISO"
-                        : "MODIFICAR_PERMISO",
-                "PERMISOS",
-                (nuevo
-                        ? "Se creó el permiso "
-                        : "Se modificó el permiso ")
-                        + guardado.getNombre()
-        );
+        permisoService.guardar(permiso);
 
         return "redirect:/permisos";
     }

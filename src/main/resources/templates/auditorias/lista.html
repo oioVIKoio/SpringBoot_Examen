@@ -38,6 +38,8 @@
             <th>Usuario</th>
             <th>Acción</th>
             <th>Módulo</th>
+            <th>Entidad</th>
+            <th>ID registro</th>
             <th>Descripción</th>
         </tr>
         </thead>
@@ -60,6 +62,12 @@
             </td>
 
             <td th:text="${auditoria.modulo}">
+            </td>
+
+            <td th:text="${auditoria.entidad}">
+            </td>
+
+            <td th:text="${auditoria.entidadId}">
             </td>
 
             <td th:text="${auditoria.descripcion}">

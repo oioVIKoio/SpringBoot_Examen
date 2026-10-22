@@ -6,7 +6,6 @@ import pe.edu.tecsup.examen1.entity.Permiso;
 import pe.edu.tecsup.examen1.entity.Rol;
 import pe.edu.tecsup.examen1.repository.PermisoRepository;
 import pe.edu.tecsup.examen1.repository.RolRepository;
-import pe.edu.tecsup.examen1.service.AuditoriaService;
 import pe.edu.tecsup.examen1.service.RolService;
 
 import java.util.HashSet;
@@ -18,16 +17,13 @@ public class RolServiceImpl implements RolService {
 
     private final RolRepository rolRepository;
     private final PermisoRepository permisoRepository;
-    private final AuditoriaService auditoriaService;
 
     public RolServiceImpl(
             RolRepository rolRepository,
-            PermisoRepository permisoRepository,
-            AuditoriaService auditoriaService) {
+            PermisoRepository permisoRepository) {
 
         this.rolRepository = rolRepository;
         this.permisoRepository = permisoRepository;
-        this.auditoriaService = auditoriaService;
     }
 
     @Override
@@ -49,20 +45,7 @@ public class RolServiceImpl implements RolService {
     @Transactional
     public Rol guardarRol(Rol rol) {
 
-        boolean nuevo = rol.getId() == null;
-
-        Rol guardado = rolRepository.save(rol);
-
-        auditoriaService.registrar(
-                nuevo ? "CREAR_ROL" : "MODIFICAR_ROL",
-                "ROLES",
-                (nuevo
-                        ? "Se creó el rol "
-                        : "Se modificó el rol ")
-                        + guardado.getNombre()
-        );
-
-        return guardado;
+        return rolRepository.save(rol);
     }
 
     @Override
@@ -82,13 +65,6 @@ public class RolServiceImpl implements RolService {
 
         Rol actualizado =
                 rolRepository.save(rol);
-
-        auditoriaService.registrar(
-                "ASIGNAR_PERMISOS",
-                "ROLES",
-                "Se modificaron los permisos del rol "
-                        + actualizado.getNombre()
-        );
 
         return actualizado;
     }

@@ -34,7 +34,9 @@ public class AuditoriaService {
     public void registrar(
             String accion,
             String modulo,
-            String descripcion) {
+            String descripcion,
+            String entidad,
+            Long entidadId) {
 
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
@@ -62,6 +64,8 @@ public class AuditoriaService {
         auditoria.setAccion(accion);
         auditoria.setModulo(modulo);
         auditoria.setDescripcion(descripcion);
+        auditoria.setEntidad(entidad);
+        auditoria.setEntidadId(entidadId);
         auditoria.setUsuario(usuarioOpt.get());
 
         auditoriaRepository.save(auditoria);
