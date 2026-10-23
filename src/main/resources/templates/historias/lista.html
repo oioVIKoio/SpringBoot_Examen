@@ -17,7 +17,8 @@
         <h2>Historias clínicas</h2>
         <div>
             <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
-            <a th:href="@{/historias/nuevo}" class="btn btn-primary">Nueva Historia</a>
+            <a th:href="@{/historias/nuevo}" class="btn btn-primary"
+               sec:authorize="hasAuthority('HISTORIAS_CREAR')">Nueva Historia</a>
         </div>
     </div>
 
@@ -30,7 +31,7 @@
             <th>Paciente</th>
             <th>Diagnóstico</th>
             <th>Tratamiento</th>
-            <th>Acciones</th>
+            <th sec:authorize="hasAuthority('HISTORIAS_EDITAR')">Acciones</th>
         </tr>
         </thead>
 
@@ -41,7 +42,7 @@
             <td th:text="${historia.paciente.nombreCompleto + ' (' + historia.paciente.dni + ')'}"></td>
             <td th:text="${historia.diagnostico}"></td>
             <td th:text="${historia.tratamiento}"></td>
-            <td>
+            <td sec:authorize="hasAuthority('HISTORIAS_EDITAR')">
                 <a th:href="@{'/historias/editar/' + ${historia.id}}" class="btn btn-warning btn-sm">Editar</a>
             </td>
         </tr>

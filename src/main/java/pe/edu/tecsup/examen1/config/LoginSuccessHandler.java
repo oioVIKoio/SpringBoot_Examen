@@ -58,8 +58,18 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         boolean puedeVerPermisos = authorities.stream()
                 .anyMatch(a -> a.getAuthority().equals("PERMISOS_VER"));
 
+        boolean esMedico = authorities.stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_MEDICO"));
+
+        boolean esRecepcionista = authorities.stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_RECEPCIONISTA"));
+
         if (esAdmin) {
             destino = "/";
+        } else if (esMedico) {
+            destino = "/historias";
+        } else if (esRecepcionista) {
+            destino = "/citas";
         } else if (puedeVerUsuarios) {
             destino = "/usuarios";
         } else if (puedeVerRoles) {

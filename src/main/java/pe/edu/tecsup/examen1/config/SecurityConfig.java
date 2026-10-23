@@ -172,6 +172,108 @@ public class SecurityConfig {
                                 "/api/roles/**"
                         )
                         .hasAuthority("ROLES_VER")
+
+
+                        // Pacientes: médico y recepcionista
+                        .requestMatchers("/pacientes/nuevo")
+                        .hasAuthority("PACIENTES_CREAR")
+
+                        .requestMatchers(
+                                "/pacientes/editar/**",
+                                "/pacientes/activar/**",
+                                "/pacientes/desactivar/**",
+                                "/pacientes/eliminar/**"
+                        )
+                        .hasAuthority("PACIENTES_EDITAR")
+
+                        .requestMatchers("/pacientes/guardar")
+                        .hasAnyAuthority(
+                                "PACIENTES_CREAR",
+                                "PACIENTES_EDITAR"
+                        )
+
+                        .requestMatchers(HttpMethod.POST, "/api/pacientes")
+                        .hasAuthority("PACIENTES_CREAR")
+
+                        .requestMatchers(HttpMethod.PUT, "/api/pacientes/*")
+                        .hasAuthority("PACIENTES_EDITAR")
+
+                        .requestMatchers(HttpMethod.PATCH, "/api/pacientes/*/estado")
+                        .hasAuthority("PACIENTES_EDITAR")
+
+                        .requestMatchers(HttpMethod.DELETE, "/api/pacientes/*")
+                        .hasAuthority("PACIENTES_EDITAR")
+
+                        .requestMatchers(
+                                "/pacientes",
+                                "/pacientes/**",
+                                "/api/pacientes",
+                                "/api/pacientes/**"
+                        )
+                        .hasAuthority("PACIENTES_VER")
+
+
+                        // Citas: recepcionista
+                        .requestMatchers("/citas/nuevo")
+                        .hasAuthority("CITAS_CREAR")
+
+                        .requestMatchers(
+                                "/citas/editar/**",
+                                "/citas/eliminar/**"
+                        )
+                        .hasAuthority("CITAS_EDITAR")
+
+                        .requestMatchers("/citas/guardar")
+                        .hasAnyAuthority(
+                                "CITAS_CREAR",
+                                "CITAS_EDITAR"
+                        )
+
+                        .requestMatchers(HttpMethod.POST, "/api/citas")
+                        .hasAuthority("CITAS_CREAR")
+
+                        .requestMatchers(HttpMethod.PUT, "/api/citas/*")
+                        .hasAuthority("CITAS_EDITAR")
+
+                        .requestMatchers(HttpMethod.DELETE, "/api/citas/*")
+                        .hasAuthority("CITAS_EDITAR")
+
+                        .requestMatchers(
+                                "/citas",
+                                "/citas/**",
+                                "/api/citas",
+                                "/api/citas/**"
+                        )
+                        .hasAuthority("CITAS_VER")
+
+
+                        // Historias clínicas: médico
+                        .requestMatchers("/historias/nuevo")
+                        .hasAuthority("HISTORIAS_CREAR")
+
+                        .requestMatchers("/historias/editar/**")
+                        .hasAuthority("HISTORIAS_EDITAR")
+
+                        .requestMatchers("/historias/guardar")
+                        .hasAnyAuthority(
+                                "HISTORIAS_CREAR",
+                                "HISTORIAS_EDITAR"
+                        )
+
+                        .requestMatchers(HttpMethod.POST, "/api/historias")
+                        .hasAuthority("HISTORIAS_CREAR")
+
+                        .requestMatchers(HttpMethod.PUT, "/api/historias/*")
+                        .hasAuthority("HISTORIAS_EDITAR")
+
+                        .requestMatchers(
+                                "/historias",
+                                "/historias/**",
+                                "/api/historias",
+                                "/api/historias/**"
+                        )
+                        .hasAuthority("HISTORIAS_VER")
+
                         .requestMatchers("/auditorias/**")
                         .hasRole("ADMINISTRADOR")
                         .anyRequest().authenticated()

@@ -17,7 +17,8 @@
         <h2>Pacientes</h2>
         <div>
             <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
-            <a th:href="@{/pacientes/nuevo}" class="btn btn-primary">Nuevo Paciente</a>
+            <a th:href="@{/pacientes/nuevo}" class="btn btn-primary"
+               sec:authorize="hasAuthority('PACIENTES_CREAR')">Nuevo Paciente</a>
         </div>
     </div>
 
@@ -35,7 +36,7 @@
             <th>Citas</th>
             <th>Historia clínica</th>
             <th>Estado</th>
-            <th>Acciones</th>
+            <th sec:authorize="hasAuthority('PACIENTES_EDITAR')">Acciones</th>
         </tr>
         </thead>
 
@@ -55,7 +56,7 @@
                 <span th:if="${paciente.activo}" class="badge bg-success">Activo</span>
                 <span th:unless="${paciente.activo}" class="badge bg-danger">Inactivo</span>
             </td>
-            <td class="d-flex gap-1">
+            <td class="d-flex gap-1" sec:authorize="hasAuthority('PACIENTES_EDITAR')">
                 <a th:href="@{'/pacientes/editar/' + ${paciente.id}}" class="btn btn-warning btn-sm">Editar</a>
 
                 <a th:if="${paciente.activo}"

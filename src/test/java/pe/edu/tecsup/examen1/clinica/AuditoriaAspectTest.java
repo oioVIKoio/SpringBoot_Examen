@@ -27,7 +27,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // P2: el aspecto registra usuario, fecha, operación, entidad e id sin llamadas manuales
 @SpringBootTest(properties = "spring.profiles.active=test")
 @AutoConfigureMockMvc
-@WithMockUser(username = "admin")
+@WithMockUser(username = "admin", authorities = {"ROLE_ADMINISTRADOR",
+        "PACIENTES_VER", "PACIENTES_CREAR", "PACIENTES_EDITAR",
+        "CITAS_VER", "CITAS_CREAR", "CITAS_EDITAR",
+        "HISTORIAS_VER", "HISTORIAS_CREAR", "HISTORIAS_EDITAR"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class AuditoriaAspectTest {
 

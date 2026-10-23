@@ -17,7 +17,8 @@
         <h2>Citas</h2>
         <div>
             <a th:href="@{/}" class="btn btn-secondary">Inicio</a>
-            <a th:href="@{/citas/nuevo}" class="btn btn-primary">Nueva Cita</a>
+            <a th:href="@{/citas/nuevo}" class="btn btn-primary"
+               sec:authorize="hasAuthority('CITAS_CREAR')">Nueva Cita</a>
         </div>
     </div>
 
@@ -31,7 +32,7 @@
             <th>Médico</th>
             <th>Motivo</th>
             <th>Estado</th>
-            <th>Acciones</th>
+            <th sec:authorize="hasAuthority('CITAS_EDITAR')">Acciones</th>
         </tr>
         </thead>
 
@@ -47,7 +48,7 @@
                       th:classappend="${cita.estado.name() == 'PROGRAMADA'} ? 'bg-primary' : (${cita.estado.name() == 'ATENDIDA'} ? 'bg-success' : 'bg-secondary')"
                       th:text="${cita.estado}"></span>
             </td>
-            <td class="d-flex gap-1">
+            <td class="d-flex gap-1" sec:authorize="hasAuthority('CITAS_EDITAR')">
                 <a th:href="@{'/citas/editar/' + ${cita.id}}" class="btn btn-warning btn-sm">Editar</a>
 
                 <form th:action="@{'/citas/eliminar/' + ${cita.id}}" method="post"

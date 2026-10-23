@@ -25,7 +25,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // P1: CRUD de pacientes, citas e historias clínicas con sus relaciones, DTO validados y errores
 @SpringBootTest(properties = "spring.profiles.active=test")
 @AutoConfigureMockMvc
-@WithMockUser(username = "admin")
+@WithMockUser(username = "admin", authorities = {"ROLE_ADMINISTRADOR",
+        "PACIENTES_VER", "PACIENTES_CREAR", "PACIENTES_EDITAR",
+        "CITAS_VER", "CITAS_CREAR", "CITAS_EDITAR",
+        "HISTORIAS_VER", "HISTORIAS_CREAR", "HISTORIAS_EDITAR"})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ClinicaIntegrationTest {
 
