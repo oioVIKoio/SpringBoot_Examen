@@ -43,6 +43,18 @@ public class RolViewController {
         return "redirect:/roles";
     }
 
+    @GetMapping("/desactivar/{id}")
+    public String desactivarRol(@PathVariable Long id) {
+        rolService.cambiarEstado(id, false);
+        return "redirect:/roles";
+    }
+
+    @GetMapping("/activar/{id}")
+    public String activarRol(@PathVariable Long id) {
+        rolService.cambiarEstado(id, true);
+        return "redirect:/roles";
+    }
+
     @GetMapping("/permisos/{id}")
     public String asignarPermisos(@PathVariable Long id, Model model) {
         Rol rol = rolService.obtenerPorId(id);

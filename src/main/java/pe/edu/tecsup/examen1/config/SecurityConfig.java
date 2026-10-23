@@ -92,6 +92,12 @@ public class SecurityConfig {
                         .requestMatchers("/roles/permisos/**")
                         .hasAuthority("ROLES_PERMISOS")
 
+                        .requestMatchers(
+                                "/roles/activar/**",
+                                "/roles/desactivar/**"
+                        )
+                        .hasAuthority("ROLES_ESTADO")
+
                         .requestMatchers("/roles/guardar")
                         .hasAnyAuthority(
                                 "ROLES_CREAR",
@@ -167,7 +173,7 @@ public class SecurityConfig {
                         )
                         .hasAuthority("ROLES_VER")
                         .requestMatchers("/auditorias/**")
-                        .hasRole("ADMIN")
+                        .hasRole("ADMINISTRADOR")
                         .anyRequest().authenticated()
                 )
 

@@ -35,7 +35,7 @@ public class CitaService {
     }
 
     public List<Usuario> listarMedicos() {
-        return usuarioRepository.findDistinctByRoles_NombreAndActivo(ROL_MEDICO, true);
+        return usuarioRepository.findDistinctByRoles_NombreAndRoles_ActivoAndActivo(ROL_MEDICO, true, true);
     }
 
     public Cita buscarPorId(Long id) {
@@ -86,7 +86,7 @@ public class CitaService {
 
         Usuario medico = usuarioRepository.findById(dto.getMedicoId())
                 .orElseThrow(() -> new RecursoNoEncontradoException("Médico no encontrado con ID: " + dto.getMedicoId()));
-        boolean esMedico = medico.getRoles().stream().anyMatch(r -> ROL_MEDICO.equals(r.getNombre()));
+        boolean esMedico = medico.getRoles().stream().anyMatch(r -> ROL_MEDICO.equals(r.getNombre()) && r.isActivo());
         if (!esMedico || !medico.isActivo()) {
             throw new IllegalArgumentException("El usuario " + medico.getUsuario() + " no es un médico activo");
         }

@@ -48,7 +48,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         var authorities = authentication.getAuthorities();
 
         boolean esAdmin = authorities.stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMINISTRADOR"));
 
         boolean puedeVerUsuarios = authorities.stream()
                 .anyMatch(a -> a.getAuthority().equals("USUARIOS_VER"));

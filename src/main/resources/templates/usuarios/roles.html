@@ -40,12 +40,14 @@
                     <input class="form-check-input"
                            type="checkbox"
                            name="rolesIds"
+                           th:id="'rol-' + ${rol.id}"
                            th:value="${rol.id}"
                            th:checked="${usuario.roles.contains(rol)}">
 
                     <label class="form-check-label"
-                           th:text="${rol.nombre}">
-                        Rol
+                           th:for="'rol-' + ${rol.id}">
+                        <span th:text="${rol.nombre}">Rol</span>
+                        <span th:unless="${rol.activo}" class="badge bg-secondary">Inactivo</span>
                     </label>
 
                 </div>

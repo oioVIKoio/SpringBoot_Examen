@@ -45,6 +45,25 @@ public class RolServiceImpl implements RolService {
     @Transactional
     public Rol guardarRol(Rol rol) {
 
+        if (rol.getId() == null) {
+            return rolRepository.save(rol);
+        }
+
+        // El formulario solo trae nombre y descripción: se conservan permisos y estado
+        Rol existente = obtenerPorId(rol.getId());
+        existente.setNombre(rol.getNombre());
+        existente.setDescripcion(rol.getDescripcion());
+
+        return rolRepository.save(existente);
+    }
+
+    @Override
+    @Transactional
+    public Rol cambiarEstado(Long id, boolean activo) {
+
+        Rol rol = obtenerPorId(id);
+        rol.setActivo(activo);
+
         return rolRepository.save(rol);
     }
 

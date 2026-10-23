@@ -54,6 +54,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         for (var rol : usuario.getRoles()) {
 
+            // Un rol inactivo no da acceso
+            if (!rol.isActivo()) {
+                continue;
+            }
+
             authorities.add(
                     new SimpleGrantedAuthority(
                             "ROLE_" + rol.getNombre()

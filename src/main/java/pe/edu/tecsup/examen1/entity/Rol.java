@@ -1,6 +1,7 @@
 package pe.edu.tecsup.examen1.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +18,11 @@ public class Rol {
     private String nombre;
 
     private String descripcion;
+
+    // Los roles que ya existen en la BD quedan activos al crear la columna
+    @ColumnDefault("true")
+    @Column(nullable = false)
+    private boolean activo = true;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "roles")
@@ -52,6 +58,14 @@ public class Rol {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public Set<Usuario> getUsuarios() {

@@ -32,6 +32,7 @@
             <th>ID</th>
             <th>Nombre</th>
             <th>Descripción</th>
+            <th>Estado</th>
             <th>Acciones</th>
         </tr>
         </thead>
@@ -47,6 +48,11 @@
             <td th:text="${rol.descripcion}"></td>
 
             <td>
+                <span th:if="${rol.activo}" class="badge bg-success">Activo</span>
+                <span th:unless="${rol.activo}" class="badge bg-danger">Inactivo</span>
+            </td>
+
+            <td>
 
                 <a th:href="@{'/roles/editar/' + ${rol.id}}"
                    class="btn btn-warning btn-sm"
@@ -58,6 +64,20 @@
                    class="btn btn-info btn-sm"
                    sec:authorize="hasAuthority('ROLES_PERMISOS')">
                     Permisos
+                </a>
+
+                <a th:if="${rol.activo}"
+                   th:href="@{'/roles/desactivar/' + ${rol.id}}"
+                   class="btn btn-danger btn-sm"
+                   sec:authorize="hasAuthority('ROLES_ESTADO')">
+                    Desactivar
+                </a>
+
+                <a th:unless="${rol.activo}"
+                   th:href="@{'/roles/activar/' + ${rol.id}}"
+                   class="btn btn-success btn-sm"
+                   sec:authorize="hasAuthority('ROLES_ESTADO')">
+                    Activar
                 </a>
 
             </td>
