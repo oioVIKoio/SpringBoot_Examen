@@ -87,7 +87,10 @@ class ClinicaIntegrationTest {
         String respuesta = mockMvc.perform(post("/api/citas").contentType(MediaType.APPLICATION_JSON).content(json))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.paciente.dni").value("70000001"))
-                .andExpect(jsonPath("$.medico.usuario").value("medico1"))
+                .andExpect(jsonPath("$.medico.id").value(medicoId))
+                .andExpect(jsonPath("$.medico.nombres").value("Ana"))
+                .andExpect(jsonPath("$.medico.correo").doesNotExist())
+                .andExpect(jsonPath("$.medico.roles").doesNotExist())
                 .andExpect(jsonPath("$.estado").value("PROGRAMADA"))
                 .andReturn().getResponse().getContentAsString();
         return mapper.readTree(respuesta).get("id").asLong();

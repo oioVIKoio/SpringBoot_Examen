@@ -1,5 +1,6 @@
 package pe.edu.tecsup.examen1.entity;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,8 @@ public class Cita {
     @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;
 
+    // En el JSON de la cita solo van los datos públicos del médico
+    @JsonIncludeProperties({"id", "nombres", "apellidos", "area"})
     @ManyToOne(optional = false)
     @JoinColumn(name = "medico_id", nullable = false)
     private Usuario medico;
