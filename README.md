@@ -1,6 +1,6 @@
-# SpringBoot_Examen_1
+# SpringBoot_Examen
 
-Proyecto desarrollado en **Spring Boot** para el módulo de **Login, Usuarios, Roles y Permisos**.
+Proyecto desarrollado en **Spring Boot** para el módulo de **Login, Usuarios, Roles y Permisos** (Evaluación 01) y el **Sistema Web de Gestión Hospitalaria** (Evaluación 02).
 
 ## Tecnologías
 
@@ -8,6 +8,7 @@ Proyecto desarrollado en **Spring Boot** para el módulo de **Login, Usuarios, R
 - Spring Boot
 - Spring Security
 - Spring Data JPA / Hibernate
+- Spring AOP
 - Thymeleaf
 - Maven
 - MySQL / MariaDB
@@ -64,6 +65,30 @@ El sistema cuenta con:
 - Control de sesión por inactividad.
 - Persistencia mediante JPA e Hibernate.
 
+## Evaluación 02: Gestión Hospitalaria
+
+Versión entregada: [`v2.0.0`](https://github.com/oioVIKoio/SpringBoot_Examen/tree/v2.0.0).
+
+| Pregunta | Qué se implementó |
+|---|---|
+| P1. Relaciones JPA | Módulos de `Paciente`, `Cita` e `HistoriaClinica` con su CRUD (vistas Thymeleaf y API REST), DTO con `@Valid` y `@RestControllerAdvice` |
+| P2. Auditoría automática | `AuditoriaAspect` (AOP con `@AfterReturning`) registra usuario, fecha, operación, entidad y el id del registro al registrar, modificar, eliminar, cambiar estado o asignar |
+| P3 y P4. Roles activo/inactivo | Los roles se activan y desactivan; un rol inactivo no da acceso. Rol `ADMINISTRADOR` |
+| P5. Acceso por rol | Permisos en `SecurityConfig`, menú con `sec:authorize` y redirección según el rol al iniciar sesión (médico → `/historias`, recepcionista → `/citas`) |
+
+### Endpoints de la clínica
+
+```http
+GET/POST         /api/pacientes
+GET/PUT/DELETE   /api/pacientes/{id}
+GET/POST         /api/citas
+GET/PUT/DELETE   /api/citas/{id}
+GET/POST         /api/historias
+GET/PUT          /api/historias/{id}
+```
+
+Vistas: `/pacientes`, `/citas`, `/historias` y `/auditorias`.
+
 ## Relaciones JPA
 
 Se implementaron las relaciones solicitadas en el laboratorio:
@@ -72,6 +97,9 @@ Se implementaron las relaciones solicitadas en el laboratorio:
 - `@OneToOne`: TokenRecuperacion - Usuario.
 - `@ManyToMany`: Usuario - Rol.
 - `@ManyToMany`: Rol - Permiso.
+- `@OneToMany` / `@ManyToOne`: Paciente - Cita.
+- `@ManyToOne`: Cita - Usuario (médico).
+- `@OneToOne`: Paciente - HistoriaClinica.
 
 ## Base de datos
 
