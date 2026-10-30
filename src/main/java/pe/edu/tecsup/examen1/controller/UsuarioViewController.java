@@ -7,6 +7,7 @@ import pe.edu.tecsup.examen1.service.RolService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Set;
 
@@ -120,8 +121,12 @@ public class UsuarioViewController {
         }
     }
     @GetMapping("/desactivar/{id}")
-    public String desactivarUsuario(@PathVariable Long id) {
-        usuarioService.cambiarEstado(id, false);
+    public String desactivarUsuario(@PathVariable Long id, RedirectAttributes redirect) {
+        try {
+            usuarioService.cambiarEstado(id, false);
+        } catch (IllegalArgumentException e) {
+            redirect.addFlashAttribute("error", e.getMessage());
+        }
         return REDIRECT_USUARIOS;
     }
 

@@ -1,5 +1,7 @@
 package pe.edu.tecsup.examen1.service;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pe.edu.tecsup.examen1.entity.TokenRecuperacion;
@@ -234,12 +236,24 @@ public class UsuarioService {
                         )
                 );
 
+        if (!activo && esUsuarioAutenticado(usuario)) {
+            throw new IllegalArgumentException("No puedes desactivar tu propia cuenta");
+        }
+
         usuario.setActivo(activo);
 
         Usuario actualizado =
                 usuarioRepository.save(usuario);
 
         return actualizado;
+    }
+
+    private boolean esUsuarioAutenticado(Usuario usuario) {
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        return authentication != null
+                && usuario.getUsuario().equals(authentication.getName());
     }
 
     public Optional<Usuario> buscarPorUsuarioOCorreo(String termino) {

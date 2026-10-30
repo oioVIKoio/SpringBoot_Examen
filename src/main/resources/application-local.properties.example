@@ -1,5 +1,5 @@
 # Copiar como application-local.properties y poner los datos de tu BD local
-spring.datasource.url=jdbc:mariadb://localhost:3307/midb
+spring.datasource.url=jdbc:mariadb://localhost:3307/midb?createDatabaseIfNotExist=true
 spring.datasource.username=root
 spring.datasource.password=TU_PASSWORD
 

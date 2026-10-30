@@ -114,7 +114,17 @@ La versión integrada del proyecto fue probada utilizando MariaDB.
 
 ## Ejecución
 
-Copiar `src/main/resources/application-local.properties.example` como `application-local.properties` y poner los datos de la BD local (ese archivo no se sube al repo).
+Copiar `src/main/resources/application-local.properties.example` como `application-local.properties` y poner los datos de la BD local (ese archivo no se sube al repo). La base de datos se crea sola si no existe.
+
+Al arrancar, `data.sql` carga los roles, los permisos, un paciente con su cita e historia, y estos usuarios de prueba:
+
+| Usuario | Clave | Rol |
+|---|---|---|
+| `admin` | `Admin2026x` | ADMINISTRADOR |
+| `cramirez` | `Medico2026x` | MEDICO |
+| `lrojas` | `Recepcion2026x` | RECEPCIONISTA |
+
+Si esos datos ya existen no se modifican; si se borran, vuelven al reiniciar la aplicación.
 
 ```bash
 mvn clean test
